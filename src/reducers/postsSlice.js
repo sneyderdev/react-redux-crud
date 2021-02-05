@@ -2,7 +2,9 @@
 import { createSlice, nanoid, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
-  const response = await window.fetch('https://jsonplaceholder.typicode.com/posts');
+  const response = await window.fetch(
+    'https://jsonplaceholder.typicode.com/posts'
+  );
   const data = await response.json();
   return data;
 });
@@ -45,17 +47,17 @@ const postsSlice = createSlice({
   },
   extraReducers: {
     [fetchPosts.pending]: (state, action) => {
-      state.status = 'loading'
+      state.status = 'loading';
     },
     [fetchPosts.fulfilled]: (state, action) => {
-      state.status = 'succeeded'
-      state.data = state.data.concat(action.payload)
+      state.status = 'succeeded';
+      state.data = state.data.concat(action.payload);
     },
     [fetchPosts.rejected]: (state, action) => {
-      state.status = 'failed'
-      state.error = action.error.message
-    }
-  }
+      state.status = 'failed';
+      state.error = action.error.message;
+    },
+  },
 });
 
 export const { postCreated, postUpdated, postDeleted } = postsSlice.actions;
@@ -65,4 +67,4 @@ export default postsSlice.reducer;
 export const selectAllPosts = (state) => state.posts.data;
 
 export const selectPostById = (state, postId) =>
-  state.posts.data.find((post) => post.id === postId);
+  state.posts.data.find((post) => post.id.toString() === postId);

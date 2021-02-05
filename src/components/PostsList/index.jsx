@@ -9,15 +9,24 @@ import Posts from './PostsList.styles';
 import { Title } from '../../shared';
 
 const PostsList = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const posts = useSelector(selectAllPosts);
-  const postStatus = useSelector(state => state.posts.status)
+  const postStatus = useSelector((state) => state.posts.status);
 
-useEffect(() => {
+  useEffect(() => {
     if (postStatus === 'idle') {
-      dispatch(fetchPosts())
+      dispatch(fetchPosts());
     }
-  }, [postStatus])
+  }, [postStatus]);
+
+  if (postStatus === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  if (postStatus === 'failed') {
+    const error = useSelector((state) => state.error);
+    return <div>{error}</div>;
+  }
 
   return (
     <Posts>
@@ -26,10 +35,10 @@ useEffect(() => {
         {posts.map((post) => (
           <PostItem
             key={post.id}
-            id={post.id}
+            id={post.id.toString()}
             title={post.title}
             body={post.body}
-            user={post.user}
+            user={post.userId.toString()}
           />
         ))}
       </div>
