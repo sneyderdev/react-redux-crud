@@ -7,7 +7,6 @@ const FooterContainer = styled.footer`
   color: ${({ theme }) => theme.colors.grey};
 
   a {
-    text-decoration: none;
     color: ${({ theme }) => theme.colors.white};
 
     &:hover {

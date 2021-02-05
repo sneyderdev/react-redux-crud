@@ -11,6 +11,10 @@ const GlobalStyle = createGlobalStyle`
     color: ${({ theme }) => theme.colors.grey};
     background: ${({ theme }) => theme.colors.black};
   }
+
+  a {
+    text-decoration: none;
+  }
 `;
 
 export default GlobalStyle;
