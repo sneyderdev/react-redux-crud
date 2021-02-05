@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { Button } from '../../shared';
+
 export const FieldTitle = styled.h3`
   font-size: ${({ theme }) => theme.sizes.m};
   color: ${({ theme }) => theme.colors.primary};
@@ -24,4 +26,17 @@ export const Form = styled.form`
   textarea {
     height: 100px;
   }
+
+  div {
+    display: grid;
+    margin-top: 20px;
+    gap: 10px;
+  }
+`;
+
+export const CancelButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: ${({ theme }) => theme.colors.grey};
 `;
