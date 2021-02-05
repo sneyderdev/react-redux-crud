@@ -1,4 +1,10 @@
-import { createSlice, nanoid } from '@reduxjs/toolkit';
+import { createSlice, nanoid, createAsyncThunk } from '@reduxjs/toolkit';
+
+export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
+  const response = await window.fetch('https://jsonplaceholder.typicode.com/posts');
+  const data = await response.json();
+  return data;
+});
 
 const postsSlice = createSlice({
   name: 'posts',
