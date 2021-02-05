@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { nanoid } from '@reduxjs/toolkit';
+
+import { postCreated } from '../../reducers/postsSlice';
 
 import { FieldTitle, Form, CancelButton } from './CreatePost.styles';
 import { Container, Title, Button } from '../../shared';
@@ -8,8 +12,26 @@ const CreatePost = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
 
+  const dispatch = useDispatch();
+
+  const history = useHistory();
+
   const onTitleChanged = (event) => setTitle(event.target.value);
   const onBodyChanged = (event) => setBody(event.target.value);
+
+  const onCreatePostClicked = () => {
+    if (title && body) {
+      dispatch(
+        postCreated({
+          id: nanoid(),
+          title,
+          body,
+        })
+      );
+
+      history.push('/');
+    }
+  };
 
   return (
     <main>
@@ -37,7 +59,9 @@ const CreatePost = () => {
             />
           </label>
           <div>
-            <Button type="button">Create Post</Button>
+            <Button type="button" onClick={onCreatePostClicked}>
+              Create Post
+            </Button>
             <CancelButton as={Link} to="/">
               Cancel
             </CancelButton>
