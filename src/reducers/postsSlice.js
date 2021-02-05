@@ -2,14 +2,15 @@ import { createSlice, nanoid } from '@reduxjs/toolkit';
 
 const postsSlice = createSlice({
   name: 'posts',
-  initialState: [
-    { id: '1', title: 'First Post!', body: 'Hello!' },
-    { id: '2', title: 'Second Post!', body: 'World!' },
-  ],
+  initialState: {
+    data: [],
+    status: 'idle',
+    error: null,
+  },
   reducers: {
     postCreated: {
       reducer(state, action) {
-        state.push(action.payload);
+        state.data.unshift(action.payload);
       },
       prepare(title, body, userId) {
         return {
@@ -24,7 +25,7 @@ const postsSlice = createSlice({
     },
     postUpdated(state, action) {
       const { id, title, body } = action.payload;
-      const existingPost = state.find((post) => post.id === id);
+      const existingPost = state.data.find((post) => post.id === id);
 
       if (existingPost) {
         existingPost.title = title;
@@ -32,7 +33,7 @@ const postsSlice = createSlice({
       }
     },
     postDeleted(state, action) {
-      return state.filter((post) => post.id !== action.payload);
+      return state.data.filter((post) => post.id !== action.payload);
     },
   },
 });
@@ -41,7 +42,7 @@ export const { postCreated, postUpdated, postDeleted } = postsSlice.actions;
 
 export default postsSlice.reducer;
 
-export const selectAllPosts = (state) => state.posts;
+export const selectAllPosts = (state) => state.posts.data;
 
 export const selectPostById = (state, postId) =>
-  state.posts.find((post) => post.id === postId);
+  state.posts.data.find((post) => post.id === postId);
