@@ -14,7 +14,12 @@ const PostsList = () => {
       <Title>Posts</Title>
       <div>
         {posts.map((post) => (
-          <PostItem key={post.id} title={post.title} body={post.body} />
+          <PostItem
+            key={post.id}
+            id={post.id}
+            title={post.title}
+            body={post.body}
+          />
         ))}
       </div>
     </Posts>
