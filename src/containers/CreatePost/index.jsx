@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { postCreated } from '../../reducers/postsSlice';
 
@@ -16,17 +16,20 @@ import {
 const CreatePost = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
+  const [userId, setUserId] = useState('');
 
   const dispatch = useDispatch();
+  const users = useSelector((state) => state.users);
 
   const history = useHistory();
 
   const onTitleChanged = (event) => setTitle(event.target.value);
+  const onAuthorChanged = (event) => setUserId(event.target.value);
   const onBodyChanged = (event) => setBody(event.target.value);
 
   const onCreatePostClicked = () => {
-    if (title && body) {
-      dispatch(postCreated(title, body));
+    if (title && body && userId) {
+      dispatch(postCreated(title, body, userId));
 
       history.push('/');
     }
@@ -46,6 +49,21 @@ const CreatePost = () => {
               value={title}
               onChange={onTitleChanged}
             />
+          </label>
+          <label htmlFor="postAuthor">
+            <FieldTitle>Author:</FieldTitle>
+            <select
+              id="postAuthor"
+              name="postAuthor"
+              onChange={onAuthorChanged}
+            >
+              <option value="">Select an user</option>
+              {users.map((user) => (
+                <option key={user.id} value={user.id}>
+                  {user.name}
+                </option>
+              ))}
+            </select>
           </label>
           <label htmlFor="postBody">
             <FieldTitle>Body:</FieldTitle>

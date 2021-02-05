@@ -19,6 +19,7 @@ const PostsList = () => {
             id={post.id}
             title={post.title}
             body={post.body}
+            user={post.user}
           />
         ))}
       </div>

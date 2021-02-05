@@ -9,7 +9,8 @@ export const FieldTitle = styled.h3`
 
 export const Form = styled.form`
   input,
-  textarea {
+  textarea,
+  select {
     width: 100%;
     height: 50px;
     padding: 0 10px;
@@ -29,6 +30,10 @@ export const Form = styled.form`
   textarea {
     height: 100px;
     padding: 10px;
+  }
+
+  option {
+    color: ${({ theme }) => theme.colors.black};
   }
 
   div {

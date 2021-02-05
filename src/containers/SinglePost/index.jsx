@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { postDeleted } from '../../reducers/postsSlice';
 
+import { PostAuthor } from '../../components';
+
 import {
   Post,
   ButtonsContainer,
@@ -43,6 +45,7 @@ const SinglePost = () => {
           </ButtonsContainer>
           <Post>
             <Title>{postFiltered.title}</Title>
+            <PostAuthor userId={postFiltered.user} />
             <p>{postFiltered.body}</p>
           </Post>
         </section>
