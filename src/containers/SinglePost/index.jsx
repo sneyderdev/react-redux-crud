@@ -1,8 +1,15 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Link, useParams, useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { Post, EditButton } from './SinglePost.styles';
+import { postDeleted } from '../../reducers/postsSlice';
+
+import {
+  Post,
+  ButtonsContainer,
+  EditButton,
+  DeleteButton,
+} from './SinglePost.styles';
 import { Container, Title } from '../../shared';
 
 const SinglePost = () => {
@@ -12,13 +19,28 @@ const SinglePost = () => {
     state.posts.find((post) => post.id === postId)
   );
 
+  const dispatch = useDispatch();
+
+  const history = useHistory();
+
+  const onDeletePostClicked = () => {
+    dispatch(postDeleted(postId));
+
+    history.push('/');
+  };
+
   return postFiltered ? (
     <main>
       <Container>
         <section>
-          <EditButton as={Link} to={`/edit/${postFiltered.id}`}>
-            Edit Post
-          </EditButton>
+          <ButtonsContainer>
+            <EditButton as={Link} to={`/edit/${postFiltered.id}`}>
+              Edit Post
+            </EditButton>
+            <DeleteButton type="button" onClick={onDeletePostClicked}>
+              Delete Post
+            </DeleteButton>
+          </ButtonsContainer>
           <Post>
             <Title>{postFiltered.title}</Title>
             <p>{postFiltered.body}</p>
