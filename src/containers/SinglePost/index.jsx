@@ -24,7 +24,7 @@ const SinglePost = () => {
   const history = useHistory();
 
   const onDeletePostClicked = () => {
-    dispatch(postDeleted(postId));
+    dispatch(postDeleted(postFiltered.id));
 
     history.push('/');
   };

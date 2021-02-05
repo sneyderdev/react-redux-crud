@@ -61,7 +61,10 @@ const postsSlice = createSlice({
   },
   reducers: {
     postDeleted(state, action) {
-      return state.data.filter((post) => post.id !== action.payload);
+      return {
+        ...state,
+        data: state.data.filter((post) => post.id !== action.payload),
+      };
     },
   },
   extraReducers: {
