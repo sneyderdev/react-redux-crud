@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { nanoid } from '@reduxjs/toolkit';
 
 import { postCreated } from '../../reducers/postsSlice';
 
@@ -27,13 +26,7 @@ const CreatePost = () => {
 
   const onCreatePostClicked = () => {
     if (title && body) {
-      dispatch(
-        postCreated({
-          id: nanoid(),
-          title,
-          body,
-        })
-      );
+      dispatch(postCreated(title, body));
 
       history.push('/');
     }
