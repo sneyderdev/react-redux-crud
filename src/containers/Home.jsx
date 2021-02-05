@@ -2,9 +2,13 @@ import React from 'react';
 
 import { PostList } from '../components';
 
+import { Container } from '../shared';
+
 const Home = () => (
   <main>
-    <PostList />
+    <Container>
+      <PostList />
+    </Container>
   </main>
 );
 
