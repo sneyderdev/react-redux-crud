@@ -43,7 +43,7 @@ const SinglePost = () => {
           </ButtonsContainer>
           <Post>
             <Title>{postFiltered.title}</Title>
-            <PostAuthor userId={postFiltered.user} />
+            <PostAuthor userId={postFiltered.userId} />
             <p>{postFiltered.body}</p>
           </Post>
         </section>

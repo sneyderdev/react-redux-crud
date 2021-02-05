@@ -29,7 +29,7 @@ const CreatePost = () => {
 
   const onCreatePostClicked = () => {
     if (title && body && userId) {
-      dispatch(postCreated(title, body, userId));
+      dispatch(postCreated(title, body, Number(userId)));
 
       history.push('/');
     }

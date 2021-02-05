@@ -27,7 +27,7 @@ const postsSlice = createSlice({
             id: nanoid(),
             title,
             body,
-            user: userId,
+            userId,
           },
         };
       },

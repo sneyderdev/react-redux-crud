@@ -19,11 +19,7 @@ PostItem.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
-  user: PropTypes.string,
-};
-
-PostItem.defaultProps = {
-  user: '',
+  user: PropTypes.number.isRequired,
 };
 
 export default PostItem;

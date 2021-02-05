@@ -38,7 +38,7 @@ const PostsList = () => {
             id={post.id.toString()}
             title={post.title}
             body={post.body}
-            user={post.userId.toString()}
+            user={post.userId}
           />
         ))}
       </div>
