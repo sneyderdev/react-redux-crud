@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { postUpdated, selectPostById } from '../../reducers/postsSlice';
+import { editExistingPost, selectPostById } from '../../reducers/postsSlice';
 
 import {
   Container,
@@ -31,7 +31,7 @@ const EditPost = () => {
   const onSavePostClicked = () => {
     if (title && body) {
       dispatch(
-        postUpdated({
+        editExistingPost({
           id: postId,
           title,
           body,

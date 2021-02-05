@@ -31,6 +31,27 @@ export const addNewPost = createAsyncThunk(
   }
 );
 
+export const editExistingPost = createAsyncThunk(
+  'posts/editExistingPost',
+  async ({ id, title, body }) => {
+    const response = await window.fetch(
+      `https://jsonplaceholder.typicode.com/posts/${id}`,
+      {
+        method: 'PUT',
+        body: JSON.stringify({
+          title,
+          body,
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  }
+);
+
 const postsSlice = createSlice({
   name: 'posts',
   initialState: {
@@ -39,15 +60,6 @@ const postsSlice = createSlice({
     error: null,
   },
   reducers: {
-    postUpdated(state, action) {
-      const { id, title, body } = action.payload;
-      const existingPost = state.data.find((post) => post.id.toString() === id);
-
-      if (existingPost) {
-        existingPost.title = title;
-        existingPost.body = body;
-      }
-    },
     postDeleted(state, action) {
       return state.data.filter((post) => post.id !== action.payload);
     },
@@ -66,6 +78,15 @@ const postsSlice = createSlice({
     },
     [addNewPost.fulfilled]: (state, action) => {
       state.data.unshift(action.payload);
+    },
+    [editExistingPost.fulfilled]: (state, action) => {
+      const { id, title, body } = action.payload;
+      const existingPost = state.data.find((post) => post.id === id);
+
+      if (existingPost) {
+        existingPost.title = title;
+        existingPost.body = body;
+      }
     },
   },
 });
