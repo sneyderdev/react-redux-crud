@@ -1,13 +1,15 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
+import { selectAllPosts } from '../../reducers/postsSlice';
+
 import PostItem from '../PostItem';
 
 import Posts from './PostsList.styles';
 import { Title } from '../../shared';
 
 const PostsList = () => {
-  const posts = useSelector((state) => state.posts);
+  const posts = useSelector(selectAllPosts);
 
   return (
     <Posts>

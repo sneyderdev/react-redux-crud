@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { postUpdated } from '../../reducers/postsSlice';
+import { postUpdated, selectPostById } from '../../reducers/postsSlice';
 
 import {
   Container,
@@ -16,9 +16,7 @@ import {
 const EditPost = () => {
   const { postId } = useParams();
 
-  const postFiltered = useSelector((state) =>
-    state.posts.find((post) => post.id === postId)
-  );
+  const postFiltered = useSelector((state) => selectPostById(state, postId));
 
   const [title, setTitle] = useState(postFiltered.title);
   const [body, setBody] = useState(postFiltered.body);
