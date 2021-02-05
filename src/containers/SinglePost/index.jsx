@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { postDeleted, selectPostById } from '../../reducers/postsSlice';
+import { deletePost, selectPostById } from '../../reducers/postsSlice';
 
 import { PostAuthor } from '../../components';
 
@@ -23,8 +23,8 @@ const SinglePost = () => {
 
   const history = useHistory();
 
-  const onDeletePostClicked = () => {
-    dispatch(postDeleted(postFiltered.id));
+  const onDeletePostClicked = async () => {
+    await dispatch(deletePost(postFiltered.id));
 
     history.push('/');
   };

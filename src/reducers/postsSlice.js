@@ -52,6 +52,13 @@ export const editExistingPost = createAsyncThunk(
   }
 );
 
+export const deletePost = createAsyncThunk('posts/deletePost', async (id) => {
+  await window.fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+    method: 'DELETE',
+  });
+  return id;
+});
+
 const postsSlice = createSlice({
   name: 'posts',
   initialState: {
@@ -59,14 +66,7 @@ const postsSlice = createSlice({
     status: 'idle',
     error: null,
   },
-  reducers: {
-    postDeleted(state, action) {
-      return {
-        ...state,
-        data: state.data.filter((post) => post.id !== action.payload),
-      };
-    },
-  },
+  reducers: {},
   extraReducers: {
     [fetchPosts.pending]: (state, action) => {
       state.status = 'loading';
@@ -91,6 +91,10 @@ const postsSlice = createSlice({
         existingPost.body = body;
       }
     },
+    [deletePost.fulfilled]: (state, action) => ({
+      ...state,
+      data: state.data.filter((post) => post.id !== action.payload),
+    }),
   },
 });
 
