@@ -8,6 +8,7 @@ const Button = styled.button`
   outline: 0;
   border-radius: 5px;
   cursor: pointer;
+  font-family: ${({ theme }) => theme.font.primary};
   font-size: ${({ theme }) => theme.sizes.m};
   color: ${({ theme }) => theme.colors.black};
   background: ${({ theme }) => theme.colors.primary};

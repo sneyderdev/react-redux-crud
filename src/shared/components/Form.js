@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Button } from '../../shared';
+import Button from './Button';
 
 export const FieldTitle = styled.h3`
   font-size: ${({ theme }) => theme.sizes.m};

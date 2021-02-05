@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { nanoid } from '@reduxjs/toolkit';
+import { Link, useHistory, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { postCreated } from '../../reducers/postsSlice';
+import { postUpdated } from '../../reducers/postsSlice';
 
 import {
   Container,
@@ -14,9 +13,15 @@ import {
   CancelButton,
 } from '../../shared';
 
-const CreatePost = () => {
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
+const EditPost = () => {
+  const { postId } = useParams();
+
+  const postFiltered = useSelector((state) =>
+    state.posts.find((post) => post.id === postId)
+  );
+
+  const [title, setTitle] = useState(postFiltered.title);
+  const [body, setBody] = useState(postFiltered.body);
 
   const dispatch = useDispatch();
 
@@ -25,24 +30,24 @@ const CreatePost = () => {
   const onTitleChanged = (event) => setTitle(event.target.value);
   const onBodyChanged = (event) => setBody(event.target.value);
 
-  const onCreatePostClicked = () => {
+  const onSavePostClicked = () => {
     if (title && body) {
       dispatch(
-        postCreated({
-          id: nanoid(),
+        postUpdated({
+          id: postId,
           title,
           body,
         })
       );
 
-      history.push('/');
+      history.push(`/posts/${postId}`);
     }
   };
 
   return (
     <main>
       <Container>
-        <Title>New Post</Title>
+        <Title>Edit Post</Title>
         <Form>
           <label htmlFor="postTitle">
             <FieldTitle>Title:</FieldTitle>
@@ -65,10 +70,10 @@ const CreatePost = () => {
             />
           </label>
           <div>
-            <Button type="button" onClick={onCreatePostClicked}>
-              Create Post
+            <Button type="button" onClick={onSavePostClicked}>
+              Save Post
             </Button>
-            <CancelButton as={Link} to="/">
+            <CancelButton as={Link} to={`/posts/${postId}`}>
               Cancel
             </CancelButton>
           </div>
@@ -78,4 +83,4 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default EditPost;

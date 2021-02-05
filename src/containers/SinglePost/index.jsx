@@ -1,8 +1,8 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import Post from './SinglePost.styles';
+import { Post, EditButton } from './SinglePost.styles';
 import { Container, Title } from '../../shared';
 
 const SinglePost = () => {
@@ -16,6 +16,9 @@ const SinglePost = () => {
     <main>
       <Container>
         <section>
+          <EditButton as={Link} to={`/edit/${postFiltered.id}`}>
+            Edit Post
+          </EditButton>
           <Post>
             <Title>{postFiltered.title}</Title>
             <p>{postFiltered.body}</p>
