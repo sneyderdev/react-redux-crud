@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSlice, nanoid, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
@@ -42,6 +43,19 @@ const postsSlice = createSlice({
       return state.data.filter((post) => post.id !== action.payload);
     },
   },
+  extraReducers: {
+    [fetchPosts.pending]: (state, action) => {
+      state.status = 'loading'
+    },
+    [fetchPosts.fulfilled]: (state, action) => {
+      state.status = 'succeeded'
+      state.data = state.data.concat(action.payload)
+    },
+    [fetchPosts.rejected]: (state, action) => {
+      state.status = 'failed'
+      state.error = action.error.message
+    }
+  }
 });
 
 export const { postCreated, postUpdated, postDeleted } = postsSlice.actions;

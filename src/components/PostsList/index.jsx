@@ -1,7 +1,7 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { selectAllPosts } from '../../reducers/postsSlice';
+import { selectAllPosts, fetchPosts } from '../../reducers/postsSlice';
 
 import PostItem from '../PostItem';
 
@@ -9,7 +9,15 @@ import Posts from './PostsList.styles';
 import { Title } from '../../shared';
 
 const PostsList = () => {
+  const dispatch = useDispatch()
   const posts = useSelector(selectAllPosts);
+  const postStatus = useSelector(state => state.posts.status)
+
+useEffect(() => {
+    if (postStatus === 'idle') {
+      dispatch(fetchPosts())
+    }
+  }, [postStatus])
 
   return (
     <Posts>
