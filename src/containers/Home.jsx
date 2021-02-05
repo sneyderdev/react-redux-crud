@@ -1,9 +1,11 @@
 import React from 'react';
 
+import { PostList } from '../components';
+
 const Home = () => (
-  <div>
-    <h1>Home feed</h1>
-  </div>
+  <main>
+    <PostList />
+  </main>
 );
 
 export default Home;
