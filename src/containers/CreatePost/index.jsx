@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { postCreated } from '../../reducers/postsSlice';
+import { addNewPost } from '../../reducers/postsSlice';
 
 import {
   Container,
@@ -29,7 +29,7 @@ const CreatePost = () => {
 
   const onCreatePostClicked = () => {
     if (title && body && userId) {
-      dispatch(postCreated(title, body, Number(userId)));
+      dispatch(addNewPost({ title, body, userId: Number(userId) }));
 
       history.push('/');
     }

@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { createSlice, nanoid, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   const response = await window.fetch(
@@ -9,6 +9,28 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   return data;
 });
 
+export const addNewPost = createAsyncThunk(
+  'posts/addNewPost',
+  async ({ title, body, userId }) => {
+    const response = await window.fetch(
+      'https://jsonplaceholder.typicode.com/posts',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          title,
+          body,
+          userId,
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  }
+);
+
 const postsSlice = createSlice({
   name: 'posts',
   initialState: {
@@ -17,21 +39,6 @@ const postsSlice = createSlice({
     error: null,
   },
   reducers: {
-    postCreated: {
-      reducer(state, action) {
-        state.data.unshift(action.payload);
-      },
-      prepare(title, body, userId) {
-        return {
-          payload: {
-            id: nanoid(),
-            title,
-            body,
-            userId,
-          },
-        };
-      },
-    },
     postUpdated(state, action) {
       const { id, title, body } = action.payload;
       const existingPost = state.data.find((post) => post.id.toString() === id);
@@ -56,6 +63,9 @@ const postsSlice = createSlice({
     [fetchPosts.rejected]: (state, action) => {
       state.status = 'failed';
       state.error = action.error.message;
+    },
+    [addNewPost.fulfilled]: (state, action) => {
+      state.data.unshift(action.payload);
     },
   },
 });
