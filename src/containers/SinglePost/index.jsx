@@ -15,6 +15,16 @@ const SinglePost = () => {
   const { postId } = useParams();
 
   const postFiltered = useSelector((state) => selectPostById(state, postId));
+  const postStatus = useSelector((state) => state.posts.status);
+
+  if (postStatus === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  if (postStatus === 'failed') {
+    const error = useSelector((state) => state.error);
+    return <div>{error}</div>;
+  }
 
   const onDeletePostClicked = async () => {
     setModal(!modal);
