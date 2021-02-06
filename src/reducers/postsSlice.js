@@ -17,8 +17,8 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   return data;
 });
 
-export const addNewPost = createAsyncThunk(
-  'posts/addNewPost',
+export const createPost = createAsyncThunk(
+  'posts/createPost',
   async ({ title, body, userId }) => {
     if (!localStorage.getItem('POST')) {
       localStorage.setItem('POST', 1);
@@ -47,8 +47,8 @@ export const addNewPost = createAsyncThunk(
   }
 );
 
-export const editExistingPost = createAsyncThunk(
-  'posts/editExistingPost',
+export const editPost = createAsyncThunk(
+  'posts/editPost',
   async ({ id, title, body }) => {
     if (!localStorage.getItem('PUT')) {
       localStorage.setItem('PUT', 1);
@@ -110,10 +110,10 @@ const postsSlice = createSlice({
       state.status = 'failed';
       state.error = action.error.message;
     },
-    [addNewPost.fulfilled]: (state, action) => {
+    [createPost.fulfilled]: (state, action) => {
       state.data.unshift(action.payload);
     },
-    [editExistingPost.fulfilled]: (state, action) => {
+    [editPost.fulfilled]: (state, action) => {
       const { id, title, body } = action.payload;
       const existingPost = state.data.find((post) => post.id === id);
 
