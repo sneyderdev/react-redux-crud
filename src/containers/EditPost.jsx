@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { unwrapResult } from '@reduxjs/toolkit';
+import { Helmet } from 'react-helmet';
 
 import { editPost, selectPostById } from '../reducers/postsSlice';
 
@@ -61,53 +62,59 @@ const EditPost = () => {
   };
 
   return (
-    <main>
-      <Container>
-        <Title>Edit Post ✍</Title>
-        <Form onSubmit={onFormSubmitted}>
-          <label htmlFor="postTitle">
-            <FieldTitle>Title:</FieldTitle>
-            <input
-              type="text"
-              id="postTitle"
-              name="postTitle"
-              required
-              value={title}
-              onChange={onTitleChanged}
-            />
-          </label>
-          <label htmlFor="postBody">
-            <FieldTitle>Body:</FieldTitle>
-            <textarea
-              type="text"
-              id="postBody"
-              name="postBody"
-              required
-              value={body}
-              onChange={onBodyChanged}
-            />
-          </label>
-          {failedToEdit && (
-            <span>
-              Failed to edit the post: There&apos;s probably a problem with the
-              API we work with 😅
-              {' '}
-              <br />
-              You can find more details about the error in the navigator
-              console.
-            </span>
-          )}
-          <div>
-            <Button type="submit" disabled={!canSubmit}>
-              Save Post ✅
-            </Button>
-            <CancelButton as={Link} to={`/posts/${postId}`}>
-              Cancel 🚫
-            </CancelButton>
-          </div>
-        </Form>
-      </Container>
-    </main>
+    <>
+      <Helmet>
+        <title>Edit Post - Blog Community</title>
+      </Helmet>
+
+      <main>
+        <Container>
+          <Title>Edit Post ✍</Title>
+          <Form onSubmit={onFormSubmitted}>
+            <label htmlFor="postTitle">
+              <FieldTitle>Title:</FieldTitle>
+              <input
+                type="text"
+                id="postTitle"
+                name="postTitle"
+                required
+                value={title}
+                onChange={onTitleChanged}
+              />
+            </label>
+            <label htmlFor="postBody">
+              <FieldTitle>Body:</FieldTitle>
+              <textarea
+                type="text"
+                id="postBody"
+                name="postBody"
+                required
+                value={body}
+                onChange={onBodyChanged}
+              />
+            </label>
+            {failedToEdit && (
+              <span>
+                Failed to edit the post: There&apos;s probably a problem with
+                the API we work with 😅
+                {' '}
+                <br />
+                You can find more details about the error in the navigator
+                console.
+              </span>
+            )}
+            <div>
+              <Button type="submit" disabled={!canSubmit}>
+                Save Post ✅
+              </Button>
+              <CancelButton as={Link} to={`/posts/${postId}`}>
+                Cancel 🚫
+              </CancelButton>
+            </div>
+          </Form>
+        </Container>
+      </main>
+    </>
   );
 };
 

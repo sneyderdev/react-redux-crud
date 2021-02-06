@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { unwrapResult } from '@reduxjs/toolkit';
+import { Helmet } from 'react-helmet';
 
 import { createPost } from '../reducers/postsSlice';
 
@@ -56,69 +57,75 @@ const CreatePost = () => {
   };
 
   return (
-    <main>
-      <Container>
-        <Title>New Post ➕</Title>
-        <Form onSubmit={onFormSubmitted}>
-          <label htmlFor="postTitle">
-            <FieldTitle>Title:</FieldTitle>
-            <input
-              type="text"
-              id="postTitle"
-              name="postTitle"
-              required
-              value={title}
-              onChange={onTitleChanged}
-            />
-          </label>
-          <label htmlFor="postAuthor">
-            <FieldTitle>Author:</FieldTitle>
-            <select
-              id="postAuthor"
-              name="postAuthor"
-              required
-              onChange={onAuthorChanged}
-            >
-              <option value="">Select an user</option>
-              {users.map((user) => (
-                <option key={user.id} value={user.id}>
-                  {user.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label htmlFor="postBody">
-            <FieldTitle>Body:</FieldTitle>
-            <textarea
-              type="text"
-              id="postBody"
-              name="postBody"
-              required
-              value={body}
-              onChange={onBodyChanged}
-            />
-          </label>
-          {failedToCreate && (
-            <span>
-              Failed to create the post: There&apos;s probably a problem with
-              the API we work with 😅
-              {' '}
-              <br />
-              You can find more details about the error in the navigator
-              console.
-            </span>
-          )}
-          <div>
-            <Button type="submit" disabled={!canSubmit}>
-              Create Post ✅
-            </Button>
-            <CancelButton as={Link} to="/">
-              Cancel 🚫
-            </CancelButton>
-          </div>
-        </Form>
-      </Container>
-    </main>
+    <>
+      <Helmet>
+        <title>Create New Post - Blog Community</title>
+      </Helmet>
+
+      <main>
+        <Container>
+          <Title>New Post ➕</Title>
+          <Form onSubmit={onFormSubmitted}>
+            <label htmlFor="postTitle">
+              <FieldTitle>Title:</FieldTitle>
+              <input
+                type="text"
+                id="postTitle"
+                name="postTitle"
+                required
+                value={title}
+                onChange={onTitleChanged}
+              />
+            </label>
+            <label htmlFor="postAuthor">
+              <FieldTitle>Author:</FieldTitle>
+              <select
+                id="postAuthor"
+                name="postAuthor"
+                required
+                onChange={onAuthorChanged}
+              >
+                <option value="">Select an user</option>
+                {users.map((user) => (
+                  <option key={user.id} value={user.id}>
+                    {user.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label htmlFor="postBody">
+              <FieldTitle>Body:</FieldTitle>
+              <textarea
+                type="text"
+                id="postBody"
+                name="postBody"
+                required
+                value={body}
+                onChange={onBodyChanged}
+              />
+            </label>
+            {failedToCreate && (
+              <span>
+                Failed to create the post: There&apos;s probably a problem with
+                the API we work with 😅
+                {' '}
+                <br />
+                You can find more details about the error in the navigator
+                console.
+              </span>
+            )}
+            <div>
+              <Button type="submit" disabled={!canSubmit}>
+                Create Post ✅
+              </Button>
+              <CancelButton as={Link} to="/">
+                Cancel 🚫
+              </CancelButton>
+            </div>
+          </Form>
+        </Container>
+      </main>
+    </>
   );
 };
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Helmet } from 'react-helmet';
 
 import { selectPostById } from '../../reducers/postsSlice';
 
@@ -31,30 +32,36 @@ const SinglePost = () => {
   };
 
   return postFiltered ? (
-    <main>
-      <Container>
-        <section>
-          <ButtonsContainer>
-            <EditButton as={Link} to={`/edit/${postFiltered.id}`}>
-              Edit Post ✍
-            </EditButton>
-            <DeleteButton type="button" onClick={onDeletePostClicked}>
-              Delete Post 🗑
-            </DeleteButton>
-          </ButtonsContainer>
-          <Post>
-            <Title>{postFiltered.title}</Title>
-            <PostAuthor userId={postFiltered.userId} />
-            <p>{postFiltered.body}</p>
-          </Post>
-        </section>
-      </Container>
-      <DeleteModal
-        isShowing={modal}
-        setModal={setModal}
-        postId={postFiltered.id}
-      />
-    </main>
+    <>
+      <Helmet>
+        <title>{`${postFiltered.title} - Blog Community`}</title>
+      </Helmet>
+
+      <main>
+        <Container>
+          <section>
+            <ButtonsContainer>
+              <EditButton as={Link} to={`/edit/${postFiltered.id}`}>
+                Edit Post ✍
+              </EditButton>
+              <DeleteButton type="button" onClick={onDeletePostClicked}>
+                Delete Post 🗑
+              </DeleteButton>
+            </ButtonsContainer>
+            <Post>
+              <Title>{postFiltered.title}</Title>
+              <PostAuthor userId={postFiltered.userId} />
+              <p>{postFiltered.body}</p>
+            </Post>
+          </section>
+        </Container>
+        <DeleteModal
+          isShowing={modal}
+          setModal={setModal}
+          postId={postFiltered.id}
+        />
+      </main>
+    </>
   ) : (
     <main>
       <section>
