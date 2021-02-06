@@ -1,32 +1,23 @@
-import React from 'react';
-import { Link, useParams, useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import { deletePost, selectPostById } from '../../reducers/postsSlice';
+import { selectPostById } from '../../reducers/postsSlice';
 
-import { PostAuthor } from '../../components';
+import { PostAuthor, DeleteModal } from '../../components';
 
-import {
-  Post,
-  ButtonsContainer,
-  EditButton,
-  DeleteButton,
-} from './SinglePost.styles';
-import { Container, Title } from '../../shared';
+import { Post, ButtonsContainer } from './SinglePost.styles';
+import { Container, Title, EditButton, DeleteButton } from '../../shared';
 
 const SinglePost = () => {
+  const [modal, setModal] = useState(false);
+
   const { postId } = useParams();
 
   const postFiltered = useSelector((state) => selectPostById(state, postId));
 
-  const dispatch = useDispatch();
-
-  const history = useHistory();
-
   const onDeletePostClicked = async () => {
-    await dispatch(deletePost(postFiltered.id));
-
-    history.push('/');
+    setModal(!modal);
   };
 
   return postFiltered ? (
@@ -48,6 +39,11 @@ const SinglePost = () => {
           </Post>
         </section>
       </Container>
+      <DeleteModal
+        isShowing={modal}
+        setModal={setModal}
+        postId={postFiltered.id}
+      />
     </main>
   ) : (
     <main>

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Button = styled.button`
+export const Button = styled.button`
   width: 100%;
   height: 50px;
   font-weight: 700;
@@ -12,6 +12,20 @@ const Button = styled.button`
   font-size: ${({ theme }) => theme.sizes.m};
   color: ${({ theme }) => theme.colors.black};
   background: ${({ theme }) => theme.colors.primary};
+`;
+
+export const EditButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const DeleteButton = styled(EditButton)`
+  background: ${({ theme }) => theme.colors.red};
+`;
+
+export const CancelButton = styled(EditButton)`
+  background: ${({ theme }) => theme.colors.grey};
 `;
 
 export default Button;
