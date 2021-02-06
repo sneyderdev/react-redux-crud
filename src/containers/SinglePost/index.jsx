@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { selectPostById } from '../../reducers/postsSlice';
 
-import { PostAuthor, DeleteModal } from '../../components';
+import { PostAuthor, DeleteModal, Loader } from '../../components';
 
 import { Post, ButtonsContainer } from './SinglePost.styles';
 import { Container, Title, EditButton, DeleteButton } from '../../shared';
@@ -18,7 +18,7 @@ const SinglePost = () => {
   const postStatus = useSelector((state) => state.posts.status);
 
   if (postStatus === 'loading') {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   if (postStatus === 'failed') {

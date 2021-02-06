@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { selectAllPosts } from '../../reducers/postsSlice';
 
 import PostItem from '../PostItem';
+import Loader from '../Loader';
 
 import Posts from './PostsList.styles';
 import { Title } from '../../shared';
@@ -13,7 +14,7 @@ const PostsList = () => {
   const postStatus = useSelector((state) => state.posts.status);
 
   if (postStatus === 'loading') {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   if (postStatus === 'failed') {
