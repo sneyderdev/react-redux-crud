@@ -8,6 +8,7 @@ const Container = styled.div`
 
   @media screen and (min-width: 1024px) {
     padding: 0;
+    font-size: 20px;
   }
 `;
 

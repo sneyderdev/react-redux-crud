@@ -2,7 +2,9 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const Post = styled.article`
+  display: grid;
   padding: 20px;
+  grid-template-rows: repeat(2, auto) 1fr;
   position: relative;
   border-radius: 10px;
   border: 2px solid ${({ theme }) => theme.colors.primary};
@@ -18,6 +20,10 @@ export const Post = styled.article`
   p {
     font-size: ${({ theme }) => theme.sizes.n};
     color: ${({ theme }) => theme.colors.grey};
+  }
+
+  span {
+    align-self: end;
   }
 `;
 

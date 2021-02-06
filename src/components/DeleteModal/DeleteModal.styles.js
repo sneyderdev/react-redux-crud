@@ -21,6 +21,7 @@ export const Modal = styled.div`
   border: 2px solid ${({ theme }) => theme.colors.primary};
 
   h3 {
+    margin-top: 0;
     font-size: ${({ theme }) => theme.sizes.l};
     color: ${({ theme }) => theme.colors.white};
   }
@@ -34,5 +35,15 @@ export const Modal = styled.div`
   div {
     display: grid;
     gap: 10px;
+
+    @media screen and (min-width: 1024px) {
+      grid-template-columns: repeat(2, 250px);
+      justify-content: center;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    width: max-content;
+    font-size: 20px;
   }
 `;

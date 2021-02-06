@@ -17,6 +17,7 @@ export const Form = styled.form`
     outline: 0;
     transition: border-color 200ms;
     font-family: ${({ theme }) => theme.font.primary};
+    font-size: ${({ theme }) => theme.sizes.s};
     color: ${({ theme }) => theme.colors.grey};
     border: 2px solid ${({ theme }) => theme.colors.primary};
 
@@ -38,5 +39,14 @@ export const Form = styled.form`
     display: grid;
     margin-top: 20px;
     gap: 10px;
+
+    @media screen and (min-width: 1024px) {
+      grid-template-columns: repeat(2, 250px);
+      justify-content: center;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    font-size: 20px;
   }
 `;

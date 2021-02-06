@@ -9,9 +9,13 @@ export const Button = styled.button`
   border-radius: 5px;
   cursor: pointer;
   font-family: ${({ theme }) => theme.font.primary};
-  font-size: ${({ theme }) => theme.sizes.m};
+  font-size: ${({ theme }) => theme.sizes.n};
   color: ${({ theme }) => theme.colors.black};
   background: ${({ theme }) => theme.colors.primary};
+
+  @media screen and (min-width: 1024px) {
+    width: 250px;
+  }
 `;
 
 export const EditButton = styled(Button)`
