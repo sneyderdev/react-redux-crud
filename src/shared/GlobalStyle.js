@@ -15,6 +15,12 @@ const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
   }
+
+  #app {
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: auto 1fr auto;
+  }
 `;
 
 export default GlobalStyle;
