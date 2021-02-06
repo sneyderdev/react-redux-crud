@@ -3,8 +3,9 @@ export { default as GlobalStyle } from './GlobalStyle';
 
 export { default as Container } from './components/Container';
 export {
+  ButtonsContainer,
   Button,
-  EditButton,
+  MainButton,
   DeleteButton,
   CancelButton,
 } from './components/Button';

@@ -69,7 +69,7 @@ const postsSlice = createSlice({
   },
   reducers: {},
   extraReducers: {
-    [fetchPosts.pending]: (state, action) => {
+    [fetchPosts.pending]: (state) => {
       state.status = 'loading';
     },
     [fetchPosts.fulfilled]: (state, action) => {
@@ -146,3 +146,6 @@ export const selectAllPosts = (state) => state.posts.data;
 
 export const selectPostById = (state, postId) =>
   state.posts.data.find((post) => post.id.toString() === postId);
+
+export const selectPostByUser = (state, userId) =>
+  state.posts.data.filter((post) => post.userId.toString() === userId);

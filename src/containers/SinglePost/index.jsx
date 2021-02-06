@@ -7,8 +7,14 @@ import { selectPostById } from '../../reducers/postsSlice';
 
 import { PostAuthor, DeleteModal, Loader } from '../../components';
 
-import { Post, ButtonsContainer } from './SinglePost.styles';
-import { Container, Title, EditButton, DeleteButton } from '../../shared';
+import Post from './SinglePost.styles';
+import {
+  Container,
+  Title,
+  ButtonsContainer,
+  MainButton,
+  DeleteButton,
+} from '../../shared';
 
 const SinglePost = () => {
   const [modal, setModal] = useState(false);
@@ -41,9 +47,9 @@ const SinglePost = () => {
         <Container>
           <section>
             <ButtonsContainer>
-              <EditButton as={Link} to={`/edit/${postFiltered.id}`}>
+              <MainButton as={Link} to={`/edit/${postFiltered.id}`}>
                 Edit Post ✍
-              </EditButton>
+              </MainButton>
               <DeleteButton type="button" onClick={onDeletePostClicked}>
                 Delete Post 🗑
               </DeleteButton>
