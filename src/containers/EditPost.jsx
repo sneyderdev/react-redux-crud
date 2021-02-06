@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { createPost } from '../../reducers/postsSlice';
+import { editPost, selectPostById } from '../reducers/postsSlice';
 
 import {
   Container,
@@ -11,36 +11,43 @@ import {
   FieldTitle,
   Form,
   CancelButton,
-} from '../../shared';
+} from '../shared';
 
-const CreatePost = () => {
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
-  const [userId, setUserId] = useState('');
+const EditPost = () => {
+  const { postId } = useParams();
+
+  const postFiltered = useSelector((state) => selectPostById(state, postId));
+
+  const [title, setTitle] = useState(postFiltered.title);
+  const [body, setBody] = useState(postFiltered.body);
 
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.users);
 
   const history = useHistory();
 
   const onTitleChanged = (event) => setTitle(event.target.value);
-  const onAuthorChanged = (event) => setUserId(event.target.value);
   const onBodyChanged = (event) => setBody(event.target.value);
 
   const onFormSubmitted = async (event) => {
     event.preventDefault();
 
-    if (title && body && userId) {
-      await dispatch(createPost({ title, body, userId: Number(userId) }));
+    if (title && body) {
+      await dispatch(
+        editPost({
+          id: postId,
+          title,
+          body,
+        })
+      );
 
-      history.push('/');
+      history.push(`/posts/${postId}`);
     }
   };
 
   return (
     <main>
       <Container>
-        <Title>New Post</Title>
+        <Title>Edit Post</Title>
         <Form onSubmit={onFormSubmitted}>
           <label htmlFor="postTitle">
             <FieldTitle>Title:</FieldTitle>
@@ -52,22 +59,6 @@ const CreatePost = () => {
               value={title}
               onChange={onTitleChanged}
             />
-          </label>
-          <label htmlFor="postAuthor">
-            <FieldTitle>Author:</FieldTitle>
-            <select
-              id="postAuthor"
-              name="postAuthor"
-              required
-              onChange={onAuthorChanged}
-            >
-              <option value="">Select an user</option>
-              {users.map((user) => (
-                <option key={user.id} value={user.id}>
-                  {user.name}
-                </option>
-              ))}
-            </select>
           </label>
           <label htmlFor="postBody">
             <FieldTitle>Body:</FieldTitle>
@@ -81,8 +72,8 @@ const CreatePost = () => {
             />
           </label>
           <div>
-            <Button type="submit">Create Post</Button>
-            <CancelButton as={Link} to="/">
+            <Button type="submit">Save Post</Button>
+            <CancelButton as={Link} to={`/posts/${postId}`}>
               Cancel
             </CancelButton>
           </div>
@@ -92,4 +83,4 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default EditPost;
