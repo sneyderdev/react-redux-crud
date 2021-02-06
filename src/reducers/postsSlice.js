@@ -2,6 +2,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
+  if (!localStorage.getItem('GET')) {
+    localStorage.setItem('GET', 1);
+  } else {
+    const counter = localStorage.getItem('GET');
+    const newCounter = Number(counter) + 1;
+    localStorage.setItem('GET', newCounter);
+  }
+
   const response = await window.fetch(
     'https://jsonplaceholder.typicode.com/posts'
   );
@@ -12,6 +20,14 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
 export const addNewPost = createAsyncThunk(
   'posts/addNewPost',
   async ({ title, body, userId }) => {
+    if (!localStorage.getItem('POST')) {
+      localStorage.setItem('POST', 1);
+    } else {
+      const counter = localStorage.getItem('POST');
+      const newCounter = Number(counter) + 1;
+      localStorage.setItem('POST', newCounter);
+    }
+
     const response = await window.fetch(
       'https://jsonplaceholder.typicode.com/posts',
       {
@@ -34,6 +50,14 @@ export const addNewPost = createAsyncThunk(
 export const editExistingPost = createAsyncThunk(
   'posts/editExistingPost',
   async ({ id, title, body }) => {
+    if (!localStorage.getItem('PUT')) {
+      localStorage.setItem('PUT', 1);
+    } else {
+      const counter = localStorage.getItem('PUT');
+      const newCounter = Number(counter) + 1;
+      localStorage.setItem('PUT', newCounter);
+    }
+
     const response = await window.fetch(
       `https://jsonplaceholder.typicode.com/posts/${id}`,
       {
@@ -53,6 +77,13 @@ export const editExistingPost = createAsyncThunk(
 );
 
 export const deletePost = createAsyncThunk('posts/deletePost', async (id) => {
+  if (!localStorage.getItem('DELETE')) {
+    localStorage.setItem('DELETE', 1);
+  } else {
+    const counter = localStorage.getItem('DELETE');
+    const newCounter = Number(counter) + 1;
+    localStorage.setItem('DELETE', newCounter);
+  }
   await window.fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
     method: 'DELETE',
   });

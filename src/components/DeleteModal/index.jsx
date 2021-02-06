@@ -42,7 +42,7 @@ const DeleteModal = ({ isShowing, setModal, postId }) => {
 DeleteModal.propTypes = {
   isShowing: PropTypes.bool.isRequired,
   setModal: PropTypes.func.isRequired,
-  postId: PropTypes.number.isRequired,
+  postId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 };
 
 export default DeleteModal;
