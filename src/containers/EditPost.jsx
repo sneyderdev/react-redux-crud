@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 import { editPost, selectPostById } from '../reducers/postsSlice';
 
@@ -20,6 +21,7 @@ const EditPost = () => {
 
   const [title, setTitle] = useState(postFiltered.title);
   const [body, setBody] = useState(postFiltered.body);
+  const [editRequestStatus, setEditRequestStatus] = useState('idle');
 
   const dispatch = useDispatch();
 
@@ -28,17 +30,28 @@ const EditPost = () => {
   const onTitleChanged = (event) => setTitle(event.target.value);
   const onBodyChanged = (event) => setBody(event.target.value);
 
+  const canSubmit =
+    [title, body].every(Boolean) && editRequestStatus === 'idle';
+
   const onFormSubmitted = async (event) => {
     event.preventDefault();
 
-    if (title && body) {
-      await dispatch(
-        editPost({
-          id: postId,
-          title,
-          body,
-        })
-      );
+    if (canSubmit) {
+      try {
+        setEditRequestStatus('pending');
+        const resultAction = await dispatch(
+          editPost({
+            id: postId,
+            title,
+            body,
+          })
+        );
+        unwrapResult(resultAction);
+      } catch (err) {
+        console.error('Failed to edit the post: ', err);
+      } finally {
+        setEditRequestStatus('idle');
+      }
 
       history.push(`/posts/${postId}`);
     }
@@ -72,7 +85,9 @@ const EditPost = () => {
             />
           </label>
           <div>
-            <Button type="submit">Save Post ✅</Button>
+            <Button type="submit" disabled={!canSubmit}>
+              Save Post ✅
+            </Button>
             <CancelButton as={Link} to={`/posts/${postId}`}>
               Cancel 🚫
             </CancelButton>

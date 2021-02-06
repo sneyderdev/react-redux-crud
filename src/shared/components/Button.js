@@ -13,6 +13,10 @@ export const Button = styled.button`
   color: ${({ theme }) => theme.colors.black};
   background: ${({ theme }) => theme.colors.primary};
 
+  &:disabled {
+    background: #333;
+  }
+
   @media screen and (min-width: 1024px) {
     width: 250px;
   }

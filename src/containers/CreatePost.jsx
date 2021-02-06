@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 import { createPost } from '../reducers/postsSlice';
 
@@ -17,6 +18,7 @@ const CreatePost = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [userId, setUserId] = useState('');
+  const [createRequestStatus, setCreateRequestStatus] = useState('idle');
 
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
@@ -27,11 +29,24 @@ const CreatePost = () => {
   const onAuthorChanged = (event) => setUserId(event.target.value);
   const onBodyChanged = (event) => setBody(event.target.value);
 
+  const canSubmit =
+    [title, body, userId].every(Boolean) && createRequestStatus === 'idle';
+
   const onFormSubmitted = async (event) => {
     event.preventDefault();
 
-    if (title && body && userId) {
-      await dispatch(createPost({ title, body, userId: Number(userId) }));
+    if (canSubmit) {
+      try {
+        setCreateRequestStatus('pending');
+        const resultAction = await dispatch(
+          createPost({ title, body, userId: Number(userId) })
+        );
+        unwrapResult(resultAction);
+      } catch (err) {
+        console.error('Failed to create the post: ', err);
+      } finally {
+        setCreateRequestStatus('idle');
+      }
 
       history.push('/');
     }
@@ -81,7 +96,9 @@ const CreatePost = () => {
             />
           </label>
           <div>
-            <Button type="submit">Create Post ✅</Button>
+            <Button type="submit" disabled={!canSubmit}>
+              Create Post ✅
+            </Button>
             <CancelButton as={Link} to="/">
               Cancel 🚫
             </CancelButton>
