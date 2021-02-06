@@ -28,9 +28,11 @@ const EditPost = () => {
   const onTitleChanged = (event) => setTitle(event.target.value);
   const onBodyChanged = (event) => setBody(event.target.value);
 
-  const onSavePostClicked = () => {
+  const onFormSubmitted = async (event) => {
+    event.preventDefault();
+
     if (title && body) {
-      dispatch(
+      await dispatch(
         editPost({
           id: postId,
           title,
@@ -46,13 +48,14 @@ const EditPost = () => {
     <main>
       <Container>
         <Title>Edit Post</Title>
-        <Form>
+        <Form onSubmit={onFormSubmitted}>
           <label htmlFor="postTitle">
             <FieldTitle>Title:</FieldTitle>
             <input
               type="text"
               id="postTitle"
               name="postTitle"
+              required
               value={title}
               onChange={onTitleChanged}
             />
@@ -63,14 +66,13 @@ const EditPost = () => {
               type="text"
               id="postBody"
               name="postBody"
+              required
               value={body}
               onChange={onBodyChanged}
             />
           </label>
           <div>
-            <Button type="button" onClick={onSavePostClicked}>
-              Save Post
-            </Button>
+            <Button type="submit">Save Post</Button>
             <CancelButton as={Link} to={`/posts/${postId}`}>
               Cancel
             </CancelButton>

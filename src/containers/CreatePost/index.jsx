@@ -27,9 +27,11 @@ const CreatePost = () => {
   const onAuthorChanged = (event) => setUserId(event.target.value);
   const onBodyChanged = (event) => setBody(event.target.value);
 
-  const onCreatePostClicked = () => {
+  const onFormSubmitted = async (event) => {
+    event.preventDefault();
+
     if (title && body && userId) {
-      dispatch(createPost({ title, body, userId: Number(userId) }));
+      await dispatch(createPost({ title, body, userId: Number(userId) }));
 
       history.push('/');
     }
@@ -39,13 +41,14 @@ const CreatePost = () => {
     <main>
       <Container>
         <Title>New Post</Title>
-        <Form>
+        <Form onSubmit={onFormSubmitted}>
           <label htmlFor="postTitle">
             <FieldTitle>Title:</FieldTitle>
             <input
               type="text"
               id="postTitle"
               name="postTitle"
+              required
               value={title}
               onChange={onTitleChanged}
             />
@@ -55,6 +58,7 @@ const CreatePost = () => {
             <select
               id="postAuthor"
               name="postAuthor"
+              required
               onChange={onAuthorChanged}
             >
               <option value="">Select an user</option>
@@ -71,14 +75,13 @@ const CreatePost = () => {
               type="text"
               id="postBody"
               name="postBody"
+              required
               value={body}
               onChange={onBodyChanged}
             />
           </label>
           <div>
-            <Button type="button" onClick={onCreatePostClicked}>
-              Create Post
-            </Button>
+            <Button type="submit">Create Post</Button>
             <CancelButton as={Link} to="/">
               Cancel
             </CancelButton>
