@@ -2,14 +2,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
-  if (!localStorage.getItem('GET')) {
-    localStorage.setItem('GET', 1);
-  } else {
-    const counter = localStorage.getItem('GET');
-    const newCounter = Number(counter) + 1;
-    localStorage.setItem('GET', newCounter);
-  }
-
   const response = await window.fetch(
     'https://jsonplaceholder.typicode.com/posts'
   );
@@ -20,14 +12,6 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
 export const createPost = createAsyncThunk(
   'posts/createPost',
   async ({ title, body, userId }) => {
-    if (!localStorage.getItem('POST')) {
-      localStorage.setItem('POST', 1);
-    } else {
-      const counter = localStorage.getItem('POST');
-      const newCounter = Number(counter) + 1;
-      localStorage.setItem('POST', newCounter);
-    }
-
     const response = await window.fetch(
       'https://jsonplaceholder.typicode.com/posts',
       {
@@ -50,14 +34,6 @@ export const createPost = createAsyncThunk(
 export const editPost = createAsyncThunk(
   'posts/editPost',
   async ({ id, title, body }) => {
-    if (!localStorage.getItem('PUT')) {
-      localStorage.setItem('PUT', 1);
-    } else {
-      const counter = localStorage.getItem('PUT');
-      const newCounter = Number(counter) + 1;
-      localStorage.setItem('PUT', newCounter);
-    }
-
     const response = await window.fetch(
       `https://jsonplaceholder.typicode.com/posts/${id}`,
       {
@@ -77,13 +53,6 @@ export const editPost = createAsyncThunk(
 );
 
 export const deletePost = createAsyncThunk('posts/deletePost', async (id) => {
-  if (!localStorage.getItem('DELETE')) {
-    localStorage.setItem('DELETE', 1);
-  } else {
-    const counter = localStorage.getItem('DELETE');
-    const newCounter = Number(counter) + 1;
-    localStorage.setItem('DELETE', newCounter);
-  }
   await window.fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
     method: 'DELETE',
   });
@@ -104,6 +73,14 @@ const postsSlice = createSlice({
       state.status = 'loading';
     },
     [fetchPosts.fulfilled]: (state, action) => {
+      if (!localStorage.getItem('GET')) {
+        localStorage.setItem('GET', 1);
+      } else {
+        const counter = localStorage.getItem('GET');
+        const newCounter = Number(counter) + 1;
+        localStorage.setItem('GET', newCounter);
+      }
+
       state.status = 'succeeded';
       state.data = state.data.concat(action.payload);
     },
@@ -112,6 +89,14 @@ const postsSlice = createSlice({
       state.error = action.error.message;
     },
     [createPost.fulfilled]: (state, action) => {
+      if (!localStorage.getItem('POST')) {
+        localStorage.setItem('POST', 1);
+      } else {
+        const counter = localStorage.getItem('POST');
+        const newCounter = Number(counter) + 1;
+        localStorage.setItem('POST', newCounter);
+      }
+
       state.id += 1;
 
       const { title, body, userId } = action.payload;
@@ -123,6 +108,14 @@ const postsSlice = createSlice({
       });
     },
     [editPost.fulfilled]: (state, action) => {
+      if (!localStorage.getItem('PUT')) {
+        localStorage.setItem('PUT', 1);
+      } else {
+        const counter = localStorage.getItem('PUT');
+        const newCounter = Number(counter) + 1;
+        localStorage.setItem('PUT', newCounter);
+      }
+
       const { id, title, body } = action.payload;
       const existingPost = state.data.find((post) => post.id === id);
 
@@ -131,14 +124,21 @@ const postsSlice = createSlice({
         existingPost.body = body;
       }
     },
-    [deletePost.fulfilled]: (state, action) => ({
-      ...state,
-      data: state.data.filter((post) => post.id !== action.payload),
-    }),
+    [deletePost.fulfilled]: (state, action) => {
+      if (!localStorage.getItem('DELETE')) {
+        localStorage.setItem('DELETE', 1);
+      } else {
+        const counter = localStorage.getItem('DELETE');
+        const newCounter = Number(counter) + 1;
+        localStorage.setItem('DELETE', newCounter);
+      }
+      return {
+        ...state,
+        data: state.data.filter((post) => post.id !== action.payload),
+      };
+    },
   },
 });
-
-export const { postCreated, postUpdated, postDeleted } = postsSlice.actions;
 
 export default postsSlice.reducer;
 
