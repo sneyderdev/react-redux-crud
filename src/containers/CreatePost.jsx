@@ -40,7 +40,7 @@ const CreatePost = () => {
   return (
     <main>
       <Container>
-        <Title>New Post</Title>
+        <Title>New Post ➕</Title>
         <Form onSubmit={onFormSubmitted}>
           <label htmlFor="postTitle">
             <FieldTitle>Title:</FieldTitle>
@@ -81,9 +81,9 @@ const CreatePost = () => {
             />
           </label>
           <div>
-            <Button type="submit">Create Post</Button>
+            <Button type="submit">Create Post ✅</Button>
             <CancelButton as={Link} to="/">
-              Cancel
+              Cancel 🚫
             </CancelButton>
           </div>
         </Form>

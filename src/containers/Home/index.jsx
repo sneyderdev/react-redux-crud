@@ -10,7 +10,7 @@ const Home = () => (
   <main>
     <Container>
       <CreateButton as={Link} to="/create">
-        New Post
+        New Post ➕
       </CreateButton>
       <PostList />
     </Container>

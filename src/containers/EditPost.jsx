@@ -47,7 +47,7 @@ const EditPost = () => {
   return (
     <main>
       <Container>
-        <Title>Edit Post</Title>
+        <Title>Edit Post ✍</Title>
         <Form onSubmit={onFormSubmitted}>
           <label htmlFor="postTitle">
             <FieldTitle>Title:</FieldTitle>
@@ -72,9 +72,9 @@ const EditPost = () => {
             />
           </label>
           <div>
-            <Button type="submit">Save Post</Button>
+            <Button type="submit">Save Post ✅</Button>
             <CancelButton as={Link} to={`/posts/${postId}`}>
-              Cancel
+              Cancel 🚫
             </CancelButton>
           </div>
         </Form>

@@ -8,7 +8,7 @@ const Header = () => (
   <HeaderContainer>
     <Container>
       <h1>
-        <Link to="/">Welcome to the Blog CRUD</Link>
+        <Link to="/">Welcome to Blog Community 📖</Link>
       </h1>
     </Container>
   </HeaderContainer>

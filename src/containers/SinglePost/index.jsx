@@ -36,10 +36,10 @@ const SinglePost = () => {
         <section>
           <ButtonsContainer>
             <EditButton as={Link} to={`/edit/${postFiltered.id}`}>
-              Edit Post
+              Edit Post ✍
             </EditButton>
             <DeleteButton type="button" onClick={onDeletePostClicked}>
-              Delete Post
+              Delete Post 🗑
             </DeleteButton>
           </ButtonsContainer>
           <Post>

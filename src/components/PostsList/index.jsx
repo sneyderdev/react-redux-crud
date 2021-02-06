@@ -23,7 +23,7 @@ const PostsList = () => {
 
   return (
     <Posts>
-      <Title>Posts</Title>
+      <Title>Posts 📃</Title>
       <div>
         {posts.map((post) => (
           <PostItem
