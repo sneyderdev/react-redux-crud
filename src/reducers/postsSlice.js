@@ -96,6 +96,7 @@ const postsSlice = createSlice({
     data: [],
     status: 'idle',
     error: null,
+    id: 100,
   },
   reducers: {},
   extraReducers: {
@@ -111,7 +112,15 @@ const postsSlice = createSlice({
       state.error = action.error.message;
     },
     [createPost.fulfilled]: (state, action) => {
-      state.data.unshift(action.payload);
+      state.id += 1;
+
+      const { title, body, userId } = action.payload;
+      state.data.unshift({
+        id: state.id,
+        title,
+        body,
+        userId,
+      });
     },
     [editPost.fulfilled]: (state, action) => {
       const { id, title, body } = action.payload;
