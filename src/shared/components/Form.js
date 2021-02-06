@@ -46,6 +46,12 @@ export const Form = styled.form`
     }
   }
 
+  span {
+    display: inline-block;
+    margin-top: 10px;
+    color: ${({ theme }) => theme.colors.red};
+  }
+
   @media screen and (min-width: 1024px) {
     font-size: 20px;
   }

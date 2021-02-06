@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,6 +20,7 @@ const CreatePost = () => {
   const [body, setBody] = useState('');
   const [userId, setUserId] = useState('');
   const [createRequestStatus, setCreateRequestStatus] = useState('idle');
+  const [failedToCreate, setFailedToCreate] = useState(false);
 
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
@@ -43,6 +45,7 @@ const CreatePost = () => {
         );
         unwrapResult(resultAction);
       } catch (err) {
+        setFailedToCreate(true);
         console.error('Failed to create the post: ', err);
       } finally {
         setCreateRequestStatus('idle');
@@ -95,6 +98,16 @@ const CreatePost = () => {
               onChange={onBodyChanged}
             />
           </label>
+          {failedToCreate && (
+            <span>
+              Failed to create the post: There&apos;s probably a problem with
+              the API we work with 😅
+              {' '}
+              <br />
+              You can find more details about the error in the navigator
+              console.
+            </span>
+          )}
           <div>
             <Button type="submit" disabled={!canSubmit}>
               Create Post ✅

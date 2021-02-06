@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,6 +23,7 @@ const EditPost = () => {
   const [title, setTitle] = useState(postFiltered.title);
   const [body, setBody] = useState(postFiltered.body);
   const [editRequestStatus, setEditRequestStatus] = useState('idle');
+  const [failedToEdit, setFailedToEdit] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -47,13 +49,14 @@ const EditPost = () => {
           })
         );
         unwrapResult(resultAction);
+
+        history.push(`/posts/${postId}`);
       } catch (err) {
+        setFailedToEdit(true);
         console.error('Failed to edit the post: ', err);
       } finally {
         setEditRequestStatus('idle');
       }
-
-      history.push(`/posts/${postId}`);
     }
   };
 
@@ -84,6 +87,16 @@ const EditPost = () => {
               onChange={onBodyChanged}
             />
           </label>
+          {failedToEdit && (
+            <span>
+              Failed to edit the post: There&apos;s probably a problem with the
+              API we work with 😅
+              {' '}
+              <br />
+              You can find more details about the error in the navigator
+              console.
+            </span>
+          )}
           <div>
             <Button type="submit" disabled={!canSubmit}>
               Save Post ✅
